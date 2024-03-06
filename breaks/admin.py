@@ -1,6 +1,8 @@
 from django.contrib import admin
+from django.urls import reverse
 from .models import organisations, groups, replacements, dicts, breaks
 from django.contrib.admin import TabularInline
+from django.utils.html import format_html
 
 class ReplacementEmployeeInline(TabularInline):
     model = replacements.ReplacementEmployee
@@ -13,8 +15,9 @@ class OrganisationAdmin(admin.ModelAdmin):
 
 
 @admin.register(groups.Group)
-class OrganisationAdmin(admin.ModelAdmin):
+class GroupAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'manager', 'min_active', 'replacements_count')
+    search_fields = ('name',)
 
     def replacements_count(self, obj):
         return obj.replacements.count()
@@ -43,10 +46,15 @@ class ReplacementAdmin(admin.ModelAdmin):
         'id', 'group', 'date', 'break_start', 'break_end', 'break_max_duration',
     )
     inlines = (ReplacementEmployeeInline,)
+    autocomplete_fields = ('group',)
 
 
 @admin.register(breaks.Break)
 class BreakAdmin(admin.ModelAdmin):
     list_display = (
-        'id', 'replacement', 'break_start', 'break_end', 'duration',
+        'id', 'replacement_link', 'break_start', 'break_end', 'duration',
     )
+
+    def replacement_link(self, obj):
+        link = reverse('admin:breaks_replacement_change', args=[obj.replacement.id])
+        return format_html('<a href="{}">{}</a>', link, obj.replacement)
