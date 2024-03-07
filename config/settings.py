@@ -26,15 +26,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users',
+    'breaks',
+    'api',
+    'common',
     # packages
     'rest_framework',
     'django_filters',
     'djoser',
-    'breaks',
-    #api
-    'api',
-    'common',
     'drf_spectacular',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -204,3 +205,5 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
+
+AUTH_USER_MODEL = 'users.User'
