@@ -6,7 +6,7 @@ class CustomUserManager(BaseUserManager):
     use_in_migrations = True
 
     def _create_user(self, phone_number=None, email=None, password=None, username=None, **extra_fields):
-        if not email or not username or not phone_number:
+        if not (email or phone_number or username):
             raise ParseError('Укажите email или телефон')
 
         if email:

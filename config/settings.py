@@ -207,3 +207,4 @@ SIMPLE_JWT = {
 }
 
 AUTH_USER_MODEL = 'users.User'
+AUTHENTICATION_BACKENDS = ('users.backends.AuthBackend',)

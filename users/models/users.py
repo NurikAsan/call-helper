@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from phonenumber_field.modelfields import PhoneNumberField
-from .managers import CustomUserManager
+from users.managers import CustomUserManager
 from django.db import models
 
 
@@ -10,7 +10,7 @@ class User(AbstractUser):
     phone_number = PhoneNumberField(unique=True, null=True, blank=True)
 
     objects = CustomUserManager()
-    USERNAME_FIELD = 'phone_number'
+    USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 
     @property
